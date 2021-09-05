@@ -1,0 +1,33 @@
+{
+  "name": "node-crud-restapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "start": "node dist/index.js",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "rimraf dist && npm run build && npm start"
+  },
+  "author": "Muhammad Hasham Khalid",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
+    "@babel/preset-env": "^7.15.4",
+    "babel-core": "^6.26.3",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2"
+  }
+}
