@@ -1,18 +1,19 @@
 import { messageLogger } from './loggers';
-import { Responses } from './responses';
 
 export const getOne = model => async (request, response) => {
   try {
     const doc = await model.findOne({ _id: request.params.id }).lean().exec();
 
     if (!doc) {
-      return response.status(404).end({ ...Responses.notFound });
+      return response
+        .status(404)
+        .json({ success: false, errror: 'document not found' });
     }
 
-    return response.status(200).json({ ...Responses.success, data: doc });
+    return response.status(200).json({ success: true, data: doc });
   } catch (e) {
     messageLogger.error(e.message);
-    return response.status(400).end({ ...Responses.error });
+    return response.status(500).end();
   }
 };
 
@@ -20,20 +21,20 @@ export const getMany = model => async (request, response) => {
   try {
     const docs = await model.find().lean().exec();
 
-    return response.status(200).json({ ...Responses.success, data: docs });
+    return response.status(200).json({ success: false, data: docs });
   } catch (e) {
     messageLogger.error(e.message);
-    return response.status(400).end({ ...Responses.error });
+    return response.status(500).end();
   }
 };
 
 export const createOne = model => async (request, response) => {
   try {
     const doc = await model.create({ ...request.body });
-    return response.status(201).json({ ...Responses.success, data: doc });
+    return response.status(201).json({ success: true, data: doc });
   } catch (e) {
     messageLogger.error(e.message);
-    return response.status(400).end({ ...Responses.error });
+    return response.status(500).end();
   }
 };
 
@@ -51,15 +52,15 @@ export const updateOne = model => async (request, response) => {
       .exec();
 
     if (!updatedDoc) {
-      return response.status(404).end({ ...Responses.notFound });
+      return response
+        .status(404)
+        .json({ success: false, error: 'document not found' });
     }
 
-    return response
-      .status(200)
-      .json({ ...Responses.success, data: updatedDoc });
+    return response.status(200).json({ success: true, data: updatedDoc });
   } catch (e) {
     messageLogger.error(e.message);
-    return response.status(400).end({ ...Responses.error });
+    return response.status(500).end();
   }
 };
 
@@ -70,13 +71,15 @@ export const removeOne = model => async (request, response) => {
     });
 
     if (!removed) {
-      return response.status(404).end({ ...Responses.notFound });
+      return response
+        .status(404)
+        .json({ success: false, error: 'document not found' });
     }
 
-    return response.status(200).json({ ...Responses.success, data: removed });
+    return response.status(200).json({ success: false, data: removed });
   } catch (e) {
     messageLogger.error(e.message);
-    return response.status(400).end({ ...Responses.error });
+    return response.status(500).end();
   }
 };
 
