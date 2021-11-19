@@ -1,11 +1,19 @@
 import dotenv from 'dotenv';
 import { messageLogger } from '../utils/loggers';
 
-const loadedEnv = dotenv.config();
-if (loadedEnv.error) {
-  messageLogger.error(loadedEnv.error);
-} else {
-  messageLogger.success('loaded env successfully.');
+function loadEnv () {
+  if (process.env.NODE_ENV === 'development') {
+    const loadedEnv = dotenv.config();
+    if (loadedEnv.error) {
+      messageLogger.error(loadedEnv.error);
+    } else {
+      messageLogger.success('loaded env successfully.');
+    }
+    return loadedEnv.error ? {} : loadedEnv.parsed
+  }
+  return process.env;
 }
 
-export const config = loadedEnv.error ? {} : loadedEnv.parsed;
+
+
+export const config = loadEnv();
