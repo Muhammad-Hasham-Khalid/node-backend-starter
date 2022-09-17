@@ -30,7 +30,8 @@ app.use('/api/item', itemRouter);
 
 export const startServer = async () => {
   try {
-    await connect();
+    const connected = await connect();
+    if (!connected) throw new Error('DB not connected');
     app.listen(config.PORT, () => {
       messageLogger.info(`Serving on http://localhost:${config.PORT}/api`);
     });

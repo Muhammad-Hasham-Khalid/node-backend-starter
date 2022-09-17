@@ -5,6 +5,9 @@ dist
 
 # configs
 .env
+.env.development
+.env.production
+.env.testing
 
 # Logs
 logs
