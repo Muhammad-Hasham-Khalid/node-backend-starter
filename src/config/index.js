@@ -3,13 +3,14 @@ import path from 'path';
 import { messageLogger } from '../utils/loggers';
 
 const environment = {
-  production: 'production',
-  development: 'development',
-  testing: 'testing',
+  production: '.env.production',
+  development: '.env.development',
+  testing: '.env.testing',
 };
 
 function loadEnv() {
-  const envFile = `.env.${environment[process.env.APP_ENV] ?? ''}`;
+  const envFile = environment[process.env.APP_ENV] ?? '.env';
+
   const loadedEnv = dotenv.config({
     path: path.join(__dirname, '..', '..', envFile),
   });
