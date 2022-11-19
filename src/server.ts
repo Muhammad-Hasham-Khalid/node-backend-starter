@@ -1,6 +1,13 @@
 import express from 'express';
-import { testController } from './modules/test/controllers';
+import morgan from 'morgan';
+import authRoutes from './modules/auth/auth.routes';
 
 export const app = express();
 
-app.get('/', testController);
+// global middlewares
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// register routers
+app.use('/auth', authRoutes);
